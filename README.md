@@ -31,4 +31,4 @@ For better performance, try using the [Quick Cache plugin](http://wordpress.org/
   * Initial release.
 
 ## License
-The Petfinder API for WordPress Toolkit is licensed under [WTFPL](http://www.wtfpl.net/).
+The Petfinder API for WordPress Toolkit is licensed under [WTFPL](http://www.wtfpl.net/) + not going to maintain it because the rent's too damn high.
