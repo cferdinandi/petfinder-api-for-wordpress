@@ -20,7 +20,7 @@ function petf_shelter_list( $atts ) {
     extract( shortcode_atts( array(
         'shelter_id' => 'xxxx', // Change to your shelter ID
         'api_key' => 'xxxx', // Change to your API key
-        'count' => 150, // Number of animals to return. Set to higher than total # of animals in your shelter.
+        'count' => 20, // Number of animals to return. Set to higher than total # of animals in your shelter.
         'status' => 'A' // Return only adoptable animals
     ), $atts ) );
 
