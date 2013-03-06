@@ -1,0 +1,304 @@
+/*
+
+    NAME.CSS v1.0
+    Description
+    http://gomakethings.com
+
+
+    Licensed under WTFPL.
+    http://www.wtfpl.net/
+    
+
+*/
+
+/*  RESPONSIVE RESET */
+/*  Replace with your own */
+
+@-webkit-viewport { width: device-width; zoom: 1.0; }
+   @-moz-viewport { width: device-width; zoom: 1.0; }
+    @-ms-viewport { width: device-width; zoom: 1.0; }
+     @-o-viewport { width: device-width; zoom: 1.0; }
+        @viewport { width: device-width; zoom: 1.0; }
+
+html { overflow-y: auto; }
+
+img, audio, video, canvas { max-width: 100%; }
+
+/*  Sets Body Width */
+.container { 
+    max-width: 40em;
+    width: 88%;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+
+
+
+
+/*  THE GRID */
+/*  Structure and layout.
+ *  Powered by Origami. Learn more at
+ *  http://cferdinandi.github.com/origami/ */
+
+/*  Mobile-first. Single-column layout by default
+ *  Container sets the maximum page width. Adjust as needed. */
+.container { 
+    max-width: 60em;
+    width: 88%;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+
+/*  Still mostly single-column.
+ *  Grid-third, grid-half, and grid-img 
+ *  provide sub-gridding on smaller screens.  */
+@media (min-width: 30em) {
+
+	.row {
+        margin-left: -1.515151515152%;
+        margin-right: -1.515151515152%;
+	}
+
+    [class^="grid-"], 
+    [class*=" grid-"] {
+        float: left;
+        width:96.969696969697%;
+        margin-left: 1.515151515152%;
+        margin-right: 1.515151515152%;
+    }
+
+    .grid-third {
+        width: 30.30303030303%;
+    }
+
+    .grid-half,
+    .grid-img {
+        width: 46.969696969697%;
+    }
+
+    .grid-two-thirds {
+        width: 63.636363636364%;
+    }
+
+    /*  Reverses order of grid for content choreography */
+    .grid-flip {
+        float: right;
+    }
+
+}
+
+
+/*  6-column grid  */
+@media (min-width: 42.5em) {
+
+    .grid-1 {
+        width: 13.636363636364%;
+    }
+
+    .grid-2,
+    .grid-third,
+    .grid-img {
+        width: 30.30303030303%;
+    }
+
+    .grid-3,
+    .grid-half { 
+        width: 46.969696969697%;
+    }
+
+    .grid-4,
+    .grid-two-thirds { 
+        width: 63.636363636364%;
+    }
+
+    .grid-5 { 
+        width: 80.30303030303%;
+    }
+
+    .grid-6,
+    .grid-full { 
+        width: 96.969696969697%;
+    }
+
+
+    /*  Offets let you shift grid elements to the right 
+     *  but stay aligned to the grid. */
+    .offset-1 {
+        margin-left: 18.181818181818%;
+    }
+
+    .offset-2 {
+        margin-left: 34.848484848485%;
+    }
+
+    .offset-3 {
+        margin-left: 51.515151515152%;
+    }
+
+    .offset-4 {
+        margin-left: 68.181818181818%;
+    }
+
+    .offset-5 {
+        margin-left: 84.848484848485%;
+    }
+
+}
+
+
+/*  Additional gridding for grid-img on bigger screens.
+ *  Adjust as needed. */
+@media (min-width: 60em) {
+    .grid-img {
+        width: 21.969696969697%;
+    }
+}
+
+
+
+
+
+/*  PETFINDER API */
+/*  Styling for list of dogs */
+
+.pf {
+    min-height: 16.706588235em;
+}
+
+.pf-img {
+    max-height: 9.375em;
+}
+
+.pf-icon:after {
+    content: "/";
+}
+
+.pf-icon:last-child:after {
+    content: "";
+}
+
+
+
+
+
+/*  HOUDINI COLLAPSE & EXPAND */
+/*  The widget styling.
+ *  Learn more at http://cferdinandi.github.com/houdini/ */
+
+/*  Hide the collapase and expand link or button by default */
+.collapse-toggle {
+    display: none;
+    visibility: hidden;
+}
+
+/*  If JavaScript is enabled, show the collapse and expand link or button */
+.js .collapse-toggle {
+    display: inline;
+    visibility: visible;
+    cursor: pointer;
+}
+
+/* If JavaScript is enabled, hide the collapsed element */
+.js .collapse {
+    max-height: 0;
+    overflow: hidden;
+    /*  Add animation when content expands and collapses */
+    -webkit-transition: all 0.35s ease;
+       -moz-transition: all 0.35s ease;
+        -ms-transition: all 0.35s ease;
+         -o-transition: all 0.35s ease;
+            transition: all 0.35s ease;
+}
+
+/*  When collapsed element has the .active class, show it 
+ *  Uses max-height instead of display: none to allow for 
+ *  CSS3 animations, which don't work on display values. */
+.js .collapse.active {
+    max-height: 600em;
+}
+
+
+
+
+
+/*  MODALS */
+/*  Styling for modals */
+
+/*  Styling for the dropdown content.
+ *  Hides the content by default. */
+.modal-menu {
+    position: absolute;
+    display: none;
+    visibility: hidden;
+    float: left;
+    right: 0;
+    width: 100%;
+    text-align: left;
+    background-color: #b8b8b8;
+    z-index: 1000;
+}
+
+/*  When a dropdown is active, display it. */
+.modal-menu.active {
+    display: block;
+    visibility: visible;
+    padding-top: 1.529411765em;
+    padding-bottom: 1.529411765em; 
+}
+
+.close {
+    float: right;
+    font-weight: bold;
+    color: #808080;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #272727;
+    text-decoration: none;
+}
+
+
+
+
+
+/*  JS PROGRESSIVE ENHANCEMENT */
+/*  Show or hide content when JavaScript
+ *  is supported by the browser. */
+
+.hide-no-js {
+    display: none;
+    visibility: hidden;
+}
+
+.js .hide-no-js {
+    display: block;
+    visibility: visible;
+}
+
+.js .hide-js {
+    display: none;
+    visibility: hidden;
+}
+
+
+
+
+
+/*  CLEARFIX */
+
+.group:before, .group:after, 
+.container:before, .container:after, 
+.row:before, .row:after { 
+    display: table; 
+    content: ""; 
+    *zoom: 1; 
+}
+
+.group:after, 
+.container:after, 
+.row:after { 
+    clear: both; 
+}
