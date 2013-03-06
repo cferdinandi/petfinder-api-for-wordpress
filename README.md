@@ -1,7 +1,7 @@
 # The Petfinder API for WordPress Toolkit
 A collection of PHP, CSS and JavaScript to help you display a list of animals available for adoption on your WordPress site using the Petfinder API.
 
-This toolkit is intended for web developers, and allows you to customize your animal listings. If you don't have any coding experience, try the fantastic [Petfinder Listings plugin](http://wordpress.org/extend/plugins/petfinder-listings/)
+This toolkit is intended for web developers, and is intended to be customized for your site design. If you don't have any coding experience, try the fantastic [Petfinder Listings plugin](http://wordpress.org/extend/plugins/petfinder-listings/).
 
 ## How It Works
 This toolkit contains a few different files:
@@ -11,20 +11,17 @@ This toolkit contains a few different files:
 * `petfinder-api.js` - Some JavaScript progressive enhancement.
 * `img > nophoto.jpg` - A fallback image for when an animal has no photos available.
 
-### Setup
+Add these files to your theme (merge them with your existing files or add them separately as appropriate).
 
-**1. Add `functions.php`.** If your WordPress theme does not have a `functions.php` file, add this file to your theme. If `functions.php` already exists, copy-and-paste the text in the included `functions.php` file into it.
-
-**2. Add `petfinder-api.css`.** Call `petfinder-api.css` in your header: `<link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/petfinder-api.css">`.
-
-**3. Add `petfinder-api.js`.** Call `petfinder-api.js` in your footer: `<script src="<?php bloginfo('stylesheet_directory'); ?>/petfinder-api.js"></script>`.
-
-**4. Add `img > nophoto.jpg`.** If you already have an `img` folder in your theme folder, copy `nophoto.jpg` into it. Otherwise, add the `img` folder to your theme directory.
-
-### Use
+### Display Your Pet Listings
 In the WordPress text editor, use the `[shelter_list]` shortcode. To include a list of animals directly in a PHP file, add `<?php echo petf_shelter_list(); ?>`.
 
-### Performance Considerations
+## Requires jQuery
+A few of the scripts used in this toolkit require jQuery, so make sure you include that in your theme as well.
+
+Not sure how? [Here's a short tutorial.](http://gomakethings.com/jquery-wordpress/)
+
+## Performance Considerations
 The Petfinder API can be slow, especially if you're pulling information on a large number of animals.
 
 For better performance, try using the [Quick Cache plugin](http://wordpress.org/extend/plugins/quick-cache/). It will pre-build the page with the Petfinder API (and all other pages on your site) once an hour, significantly increasing site performance.
