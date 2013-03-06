@@ -9,15 +9,23 @@ This toolkit contains a few different files:
 * `petfinder-api.js` - Some JavaScript progressive enhancement.
 * `img > nophoto.jpg` - A fallback image for when an animal has no photos available.
 
-### Getting Started
+### Setup
 
-**1. Add `functions.php`.** If your WordPress theme does not have a `functions.php` file, add this file to your theme. If `functions.php` already exists, copy-and-paste the text in the included `functions.php` file into it.
+**1. Add `functions.php`** 
 
-**2. Add `petfinder-api.css`.** Call `petfinder-api.css` in your header: `<link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/petfinder-api.css">`.
+If your WordPress theme does not have a `functions.php` file, add this file to your theme. If `functions.php` already exists, copy-and-paste the text in the included `functions.php` file into it.
 
-**3. Add `petfinder-api.js`.** Call `petfinder-api.js` in your footer: `<script src="<?php bloginfo('stylesheet_directory'); ?>/petfinder-api.js"></script>`.
+**2. Add `petfinder-api.css`**
 
-**4. Add `img > nophoto.jpg`.** If you already have an `img` folder in your theme folder, copy `nophoto.jpg` into it. Otherwise, add the `img` folder to your theme directory.
+Call `petfinder-api.css` in your header: `<link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/petfinder-api.css">`.
+
+**3. Add `petfinder-api.js`**
+
+Call `petfinder-api.js` in your footer: `<script src="<?php bloginfo('stylesheet_directory'); ?>/petfinder-api.js"></script>`.
+
+**4. Add `img > nophoto.jpg`**
+
+If you already have an `img` folder in your theme folder, copy `nophoto.jpg` into it. Otherwise, add the `img` folder to your theme directory.
 
 In the WordPress text editor, use the `[shelter_list]` shortcode. To include a list of animals directly in a PHP file, add `<?php echo petf_shelter_list(); ?>`.
 
