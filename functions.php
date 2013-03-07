@@ -34,8 +34,12 @@ function petf_shelter_list( $atts ) {
         // If there is at least one animal
         if( count( $xml->pets->pet ) > 0 ){
 
-            // Filter & Sort Results
-            $output_buffer .= "<p><button class='collapse-toggle' data-target='#sort-options'>Filter Results</button></p>
+            // Intro text. Filter & Sort Results.
+            // Change text to suit your needs.
+            // Different text shown based on whether JS (and thus filters) supported.
+            $output_buffer .= "<div class='hide-no-js'><p>Use the filters to narrow your search, and click on a pet to learn more.</p></div>
+                              <div class='hide-js'><p>Click on a pet to learn more.</p></div>
+                              <p><button class='collapse-toggle' data-target='#sort-options'>Filter Results</button></p>
                               <div class='collapse hide-no-js' id='sort-options'>
                                   <form>
                                     <div class='row'>
