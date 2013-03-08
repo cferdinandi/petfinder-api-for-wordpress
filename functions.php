@@ -14,7 +14,7 @@
  * ====================================================================== */
 
 // Create Petfinder Shelter List function
-function petf_shelter_list( $atts ) {
+function petf_shelter_list() {
 
     // API Attributes
     $api_key = 'xxxx'; // Change to your API key
