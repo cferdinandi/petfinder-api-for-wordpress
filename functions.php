@@ -16,19 +16,13 @@
 // Create Petfinder Shelter List function
 function petf_shelter_list( $atts ) {
 
-    // Array of needed variables
-    extract( shortcode_atts( array(
-        'shelter_id' => 'xxxx', // Change to your shelter ID
-        'api_key' => 'xxxx', // Change to your API key
-        'count' => 20, // Number of animals to return. Set to higher than total # of animals in your shelter.
-        'status' => 'A' // Return only adoptable animals
-    ), $atts ) );
+    // API Attributes
+    $api_key = 'xxxx'; // Change to your API key
+    $count = '20'; // Number of animals to return. Set to higher than total # of animals in your shelter.
+    $shelter_id = 'xxxx'; // Change to your shelter ID
 
-    // If the XML file exists (prevents WordPress from displaying your private API key if there's an error)
-    if (file_exists("http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . intval($count) . "&id=" . $shelter_id . "&status=" . $status . "&output=full")) {
-        // Pull an XML file of animals from Petfinder
-        $xml = simplexml_load_file( "http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . intval($count) . "&id=" . $shelter_id . "&status=" . $status . "&output=full" );
-    } 
+    // Request shelter data
+    $xml = simplexml_load_file( "http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . $count . "&id=" . $shelter_id . "&status=A&output=full" );
 
 
     // If the API returns without errors
