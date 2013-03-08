@@ -24,8 +24,11 @@ function petf_shelter_list( $atts ) {
         'status' => 'A' // Return only adoptable animals
     ), $atts ) );
 
-    // Pull an XML file of animals from Petfinder
-	$xml = simplexml_load_file( "http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . intval($count) . "&id=" . $shelter_id . "&status=" . $status . "&output=full" );
+    // If the XML file exists (prevents WordPress from displaying your private API key if there's an error)
+    if (file_exists("http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . intval($count) . "&id=" . $shelter_id . "&status=" . $status . "&output=full")) {
+        // Pull an XML file of animals from Petfinder
+        $xml = simplexml_load_file( "http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . intval($count) . "&id=" . $shelter_id . "&status=" . $status . "&output=full" );
+    } 
 
 
     // If the API returns without errors
@@ -347,13 +350,13 @@ function petf_shelter_list( $atts ) {
 
         // If no animals are available for adoption
         else{
-            $output_buffer .= "We don't have any dogs available for adoption at this time. Sorry! Please check back soon.";
+            $output_buffer .= "<p>We don't have any dogs available for adoption at this time. Sorry! Please check back soon.</p>";
         }
     }
 
     // If error code is returned
     else{
-        $output_buffer = "Petfinder is down for the moment. Please check back shortly.";
+        $output_buffer = "<p>Petfinder is down for the moment. Please check back shortly.</p>";
     }
 
     // Display content
