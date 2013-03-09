@@ -20,9 +20,14 @@ function petf_shelter_list() {
     $api_key = 'xxxx'; // Change to your API key
     $count = '20'; // Number of animals to return. Set to higher than total # of animals in your shelter.
     $shelter_id = 'xxxx'; // Change to your shelter ID
+    $url = "http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . $count . "&id=" . $shelter_id . "&status=A&output=full"; // API call
 
-    // Request shelter data
-    $xml = simplexml_load_file( "http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . $count . "&id=" . $shelter_id . "&status=A&output=full" );
+    // If URL exists
+    // (Prevents WordPress from displaying private API info publicly if link is broken)
+    if ($url) {
+        // Request shelter data
+        $xml = simplexml_load_file( $url );
+    }
 
 
     // If the API returns without errors
