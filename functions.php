@@ -263,6 +263,7 @@ function petf_shelter_list() {
                 $output_buffer .=                       "</p>
                                                         <p>
                                                             <strong>Special Requirements</strong>";
+                                                            $icons = "";
                                                             foreach( $pet->options->option as $option ){
                                                                 switch($option){
                                                                     case "noCats":
