@@ -297,8 +297,7 @@ function petf_shelter_list() {
                                                             }
                 $output_buffer .=                       "</p>
                                                         <p>
-                                                            <a class='btn' href='http://www.pawsnewengland.com/adoption-form/'>Fill Out an Adoption Form</a><br>
-                                                            <a target='_blank' href='" . $pet_url . "'>Or see more photos on PetFinder...</a>
+                                                            <a target='_blank' href='" . $pet_url . "'>See more photos on PetFinder...</a>
                                                         </p>
                                                     </div>
                                                     <div class='grid-4'>
