@@ -26,6 +26,13 @@ The Petfinder API can be slow, especially if you're pulling information on a lar
 
 For better performance, try using the [Quick Cache plugin](http://wordpress.org/extend/plugins/quick-cache/). It will pre-build the page with the Petfinder API (and all other pages on your site) once an hour, significantly increasing site performance.
 
+### Increasing Timeout Limits
+If you're pulling information on a large number of animals, your server may timeout before the request is completed.
+
+If you're seeing the "Petfinder is down for the moment" message, try typing your API URL directly into a browser tab. If the data loads, then your server may be timeouting before the request can be completed.
+
+To fix this, increase the `max_execution_time` for your server. The process for doing this varies by hosting provider. You can find general information in the [PHP manual](http://php.net/manual/en/function.set-time-limit.php).
+
 ## Changelog
 * 3/6/2013
   * Initial release.
