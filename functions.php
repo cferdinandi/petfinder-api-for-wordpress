@@ -22,12 +22,10 @@ function petf_shelter_list() {
     $shelter_id = 'xxxx'; // Change to your shelter ID
     $url = "http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . $count . "&id=" . $shelter_id . "&status=A&output=full"; // API call
 
-    // If the URL exists
-    // (Prevents WordPress from displaying private API info publicly if link is broken)
-    if ($url) {
-        // Convert to string
-        $xml = simplexml_load_string($url);
-    }
+    // Request shelter data
+    $xml = @simplexml_load_file( $url );
+    // If data not available, don't display errors on page
+    if ($xml === false) {}
 
 
     // If the API returns without errors
