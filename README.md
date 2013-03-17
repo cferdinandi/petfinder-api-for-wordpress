@@ -34,6 +34,8 @@ If you're seeing the "Petfinder is down for the moment" message, try typing your
 To fix this, increase the `max_execution_time` for your server. The process for doing this varies by hosting provider. You can find general information in the [PHP manual](http://php.net/manual/en/function.set-time-limit.php).
 
 ## Changelog
+* 3/17/2013
+  * Added scripts to remove styling added by Petfinder
 * 3/14/2013
   * Updated PHP to prevent errors from showing on the site if API fails to load.
 * 3/6/2013

@@ -356,6 +356,18 @@ function petf_shelter_list() {
         $output_buffer = "<p>Petfinder is down for the moment. Please check back shortly.</p>";
     }
 
+
+    // Remove inline styling
+    $output_buffer = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $output_buffer);
+
+    // Remove font tag
+    $output_buffer = preg_replace('/<font[^>]+>/', '', $output_buffer);
+
+    // Remove empty tags
+    $petlist_cleaners = array('<p></p>' => '', '<p> </p>' => '', '<p>&nbsp;</p>' => '', '<span></span>' => '', '<span> </span>' => '', '<span>&nbsp;</span>' => '', '<span>' => '', '</span>' => '', '<font>' => '', '</font>' => '');
+    $output_buffer = strtr($output_buffer, $petlist_cleaners);
+    
+
     // Display content
     return $output_buffer;
     
