@@ -28,22 +28,41 @@ $(function () {
 
 
 /* =============================================================
- * modal.js v1.0.0
- * A kinda-sorta-not-really modal window thingy.
+ * modals.js v1.0
+ * Simple jQuery modal dialogue pop-up windows.
  * Script by Chris Ferdinandi - http://gomakethings.com
  * Licensed under WTFPL - http://www.wtfpl.net
  * ============================================================= */
 
 $(function () {
-    $('.modal').click(function(e) {
-        e.preventDefault();
-        var dataID = $(this).attr('data-target');
-        $('.modal-menu').not(dataID).removeClass('active');
-        $(dataID).toggleClass('active');
+    // Modal toggle button
+    $('.modal-toggle').click(function(e) {
+        e.preventDefault(); // Prevent default link behavior.
+        var modalID = $(this).attr('data-target'); // Get the target modal ID.
+        
+        $('body').append('<div class="modal-bg"></div>'); // Add modal background.
+        $(modalID).addClass('active').css('top', $(window).scrollTop() + 50 + "px"); // Add or remove the .active class from the modal.
     });
+
+    // Modal close button
     $('.modal-close').click(function(e) {
-        e.preventDefault();
-        $('.modal-menu').removeClass('active');
+        e.preventDefault(); // Prevent default link behavior.
+        $('.modal').removeClass('active'); // Hide modal.
+        $('.modal-bg').remove(); // Remove modal background.
+    });
+
+    // When click outside of modal
+    $('body').on('click touchstart','.modal-bg',function() {
+        $('.modal').removeClass('active'); // Hide modal.
+        $('.modal-bg').remove(); // Remove modal background.
+    });
+
+    // When escape key pressed
+    $(document).on('keydown',function(e) {
+        if ( e.keyCode === 27 ) { // If escape key pressed
+            $('.modal').removeClass('active'); // Hide modal.
+            $('.modal-bg').remove(); // Remove modal background.
+        }
     });
 });
 

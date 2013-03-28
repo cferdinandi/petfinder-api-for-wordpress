@@ -229,7 +229,7 @@ function petf_shelter_list() {
                                         // Display content: link to Petfinder, modal toggle, image and name of the animal,
                                         // and modal content, including description.
                 $output_buffer .=   "'>
-                                        <a class='modal' data-target='#modal-" . $pet->id . "' target='_blank' href='" . $pet_url . "'>";
+                                        <a class='modal-toggle' data-target='#modal-" . $pet->id . "' target='_blank' href='" . $pet_url . "'>";
                                             // If a photo of the animal exists, show it.
                                             if(count($pet->media->photos) > 0){
                                                 $output_buffer .= "<img class='pf-img' alt='Photo of " . $pet_name . "' src='" . $pet->media->photos->photo . "'>";
@@ -241,7 +241,7 @@ function petf_shelter_list() {
 
                 $output_buffer .=           "<h3>" . $pet_name . "</h3>
                                         </a>
-                                        <div class='modal-menu' id='modal-" . $pet->id . "'>
+                                        <div class='modal' id='modal-" . $pet->id . "'>
                                             <div class='container'>
                                                 <div class='group'>
                                                     <a class='close modal-close' href='#'>×</a>
