@@ -3,7 +3,7 @@ A collection of PHP, CSS and JavaScript to help you display a list of animals av
 
 This toolkit is intended for web developers, and is intended to be customized for your site design. If you don't have any coding experience, try the fantastic [Petfinder Listings plugin](http://wordpress.org/extend/plugins/petfinder-listings/).
 
-*** **Note:** This is not a plugin. It's a collection of files that you will need to manually add to your theme. ***
+***Note:** This is not a plugin. It's a collection of files that you will need to manually add to your theme.*
 
 ## How It Works
 This toolkit contains a few different files:
