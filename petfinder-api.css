@@ -163,20 +163,14 @@ img, audio, video, canvas { max-width: 100%; }
 /*  PETFINDER API */
 /*  Styling for list of dogs */
 
+/*  Ensures that all dog listings in the grid are about the same height. */
 .pf {
     min-height: 16.706588235em;
 }
 
+/*  Sets a max height for images. Prevents tall images from displaying too large. */
 .pf-img {
     max-height: 9.375em;
-}
-
-.pf-icon:after {
-    content: "/";
-}
-
-.pf-icon:last-child:after {
-    content: "";
 }
 
 
