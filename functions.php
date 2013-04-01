@@ -46,7 +46,7 @@ function petf_shelter_list() {
                                         <div class='grid-img'>
                                             <h3>Age</h3>
                                             <label>
-                                                <input type='checkbox' class='pf-sort' data-target='.Puppy' checked>
+                                                <input type='checkbox' class='pf-sort' data-target='.Baby' checked>
                                                 Puppies
                                             </label>
                                             <label>
@@ -187,6 +187,7 @@ function petf_shelter_list() {
 
                 // Change age attribute names. Customize as needed.
                 // Ex. Change 'baby' to 'puppy' or 'kitten'.
+                // If you change any of these, also change the filter data-targets above.
                 switch ($pet->age){
                     case "Baby":
 	                    $pet_age = "Baby";
