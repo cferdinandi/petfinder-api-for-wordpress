@@ -3,6 +3,8 @@ A collection of PHP, CSS and JavaScript to help you display a list of animals av
 
 This toolkit is intended for web developers, and is intended to be customized for your site design. If you don't have any coding experience, try the fantastic [Petfinder Listings plugin](http://wordpress.org/extend/plugins/petfinder-listings/).
 
+*** **Note:** This is not a plugin. It's a collection of files that you will need to manually add to your theme. ***
+
 ## How It Works
 This toolkit contains a few different files:
 
@@ -34,6 +36,8 @@ If you're seeing the "Petfinder is down for the moment" message, try typing your
 To fix this, increase the `max_execution_time` for your server. The process for doing this varies by hosting provider. You can find general information in the [PHP manual](http://php.net/manual/en/function.set-time-limit.php).
 
 ## Changelog
+* 4/1/2013
+  * Fixed display glitch for special needs categories.
 * 3/28/2013
   * Replaced dropdown menu with popup modal windows.
 * 3/17/2013
