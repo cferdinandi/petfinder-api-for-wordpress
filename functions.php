@@ -7,10 +7,21 @@
 // START COPYING HERE.
 
 /* ======================================================================
- * PetFinder-API.php
- * Add PetFinder listings to the site.
- * Script by Chris Ferdinandi - http://gomakethings.com
- * Adapted from the Petfinder Listings plugin - http://wordpress.org/extend/plugins/petfinder-listings/
+
+    Petfinder API for WordPress v1.4
+    A collection of PHP, CSS and JavaScript to help you display 
+    a list of animals available for adoption on your WordPress 
+    site using the Petfinder API.
+
+    Code by Bridget Wessel.
+    http://wordpress.org/extend/plugins/petfinder-listings/
+
+    Rebounded by Chris Ferdinandi.
+    http://gomakethings.com
+
+    Free to use under the MIT License.
+    http://gomakethings.com/mit/
+    
  * ====================================================================== */
 
 // Create Petfinder Shelter List function

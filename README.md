@@ -5,17 +5,17 @@ A collection of PHP, CSS and JavaScript to help you display a list of animals av
 To get started, [view the online tutorial](http://cferdinandi.github.com/petfinder-api-for-wordpress/) for the Petfinder API for WordPress toolkit.
 
 ## Changelog
-* 4/1/2013
+* v1.4 (April 1, 2013)
   * Fixed display glitch for special needs categories.
   * Updated documentation.
-* 3/28/2013
+* v1.3 (March 28, 2013)
   * Replaced dropdown menu with popup modal windows.
-* 3/17/2013
+* v1.2 (March 17, 2013)
   * Added scripts to remove styling added by Petfinder.
-* 3/14/2013
+* v1.1 (March 14, 2013)
   * Updated PHP to prevent errors from showing on the site if API fails to load.
-* 3/6/2013
+* v1.0 (March 6, 2013)
   * Initial release.
 
 ## License
-The Petfinder API for WordPress Toolkit is licensed under [WTFPL](http://www.wtfpl.net/) + "Not going to maintain this because the rent is too damn high" License.
+The Petfinder API for WordPress Toolkit is free to use under the [MIT License](http://gomakethings.com/mit/).

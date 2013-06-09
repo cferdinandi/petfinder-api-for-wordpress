@@ -1,8 +1,12 @@
 /* =============================================================
- * houdini.js v1.0.0
- * A simple collapse and expand widget.
- * Script by Chris Ferdinandi - http://cferdinandi.github.com/houdini/
- * Licensed under WTFPL - http://www.wtfpl.net/
+
+    Houdini v1.0
+    A simple collapse and expand widget by Chris Ferdinandi
+    http://cferdinandi.github.com/houdini/
+
+    Free to use under the MIT License.
+    http://gomakethings.com/mit/
+    
  * ============================================================= */
 
 $(function () {
@@ -28,10 +32,14 @@ $(function () {
 
 
 /* =============================================================
- * modals.js v1.0
- * Simple jQuery modal dialogue pop-up windows.
- * Script by Chris Ferdinandi - http://gomakethings.com
- * Licensed under WTFPL - http://www.wtfpl.net
+
+    Modals v1.0
+    Simple jQuery modal dialogue pop-up windows by Chris Ferdinandi
+    http://gomakethings.com
+    
+    Free to use under the MIT License.
+    http://gomakethings.com/mit/
+    
  * ============================================================= */
 
 $(function () {
@@ -71,10 +79,14 @@ $(function () {
 
 
 /* =============================================================
- * petfinder-sort.js v1.0.0
- * Filter PetFinder results by a variety of categories.
- * Script by Chris Ferdinandi - http://gomakethings.com
- * Licensed under WTFPL - http://www.wtfpl.net
+
+    Petfinder Sort v1.0
+    Filter PetFinder results by a variety of categories by Chris Ferdinandi
+    http://gomakethings.com
+
+    Free to use under the MIT License.
+    http://gomakethings.com/mit/
+
  * ============================================================= */
 
 $(function () {
@@ -113,10 +125,16 @@ $(function () {
 
 
 /* =============================================================
- * js-accessibility.js v1.0.0
- * Adds .js class to <body> for progressive enhancement.
- * Script by Chris Ferdinandi - http://cferdinandi.github.com/js-accessibility/
- * Licensed under WTFPL - http://www.wtfpl.net
+
+    Progressively Enhanced JS v1.0
+    Adds .js class to <body> for progressive enhancement.
+
+    Script by Chris Ferdinandi.
+    http://gomakethings.com
+
+    Free to use under the MIT License.
+    http://gomakethings.com/mit/
+    
  * ============================================================= */
 
 $(function () {

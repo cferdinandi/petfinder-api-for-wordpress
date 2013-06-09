@@ -1,15 +1,20 @@
-/*
+/* =============================================================
 
-    NAME.CSS v1.0
-    Description
+    Petfinder API for WordPress v1.4
+    A collection of PHP, CSS and JavaScript to help you display 
+    a list of animals available for adoption on your WordPress 
+    site using the Petfinder API.
+
+    Code by Bridget Wessel.
+    http://wordpress.org/extend/plugins/petfinder-listings/
+
+    Rebounded by Chris Ferdinandi.
     http://gomakethings.com
 
-
-    Licensed under WTFPL.
-    http://www.wtfpl.net/
+    Free to use under the MIT License.
+    http://gomakethings.com/mit/
     
-
-*/
+ * ============================================================= */
 
 /*  RESPONSIVE RESET */
 /*  Replace with your own */
@@ -37,9 +42,7 @@ img, audio, video, canvas { max-width: 100%; }
 
 
 /*  THE GRID */
-/*  Structure and layout.
- *  Powered by Origami. Learn more at
- *  http://cferdinandi.github.com/origami/ */
+/*  Structure and layout. */
 
 /*  Mobile-first. Single-column layout by default
  *  Container sets the maximum page width. Adjust as needed. */
