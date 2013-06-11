@@ -205,7 +205,7 @@ function get_pet_description($pet_description) {
 
 
 /* =============================================================
-    PET LIST CONDENSER
+    PET VALUE CONDENSER
     Removes spacing and special characters from strings.
  * ============================================================= */
 
