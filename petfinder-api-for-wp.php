@@ -120,29 +120,35 @@ function get_pet_photos($pet) {
     $pet_photo_size = $pet_photo_medium; // change as desired
     $pet_photo_limit_number = true; // limit number of photos to just first photo? true = yes
 
-    // Get Pet Photo(s)
-    if ( $pet_photo_limit_number == true ) {
+    // If pet has photos
+    if( count($pet->media->photos) > 0 ) {
+
+        // For each photo, get photos that match the set size
         foreach ( $pet->media->photos->photo as $photo ) {
             foreach( $photo->attributes() as $key => $value ) {
                 if ( $key == 'size' ) {
                     if ( $value == $pet_photo_size ) {
-                        $pet_photos = '<br>' . '<img alt="Photo of ' . $pet_name . '" src="' . $photo . '">';
-                        break;
+
+                        // If limit set on number of photos, get the first photo
+                        if ( $pet_photo_limit_number == true ) {
+                            $pet_photos = '<img alt="Photo of ' . $pet_name . '" src="' . $photo . '">';
+                            break;
+                        }
+
+                        // Otherwise, get all of them
+                        else {
+                            $pet_photos .= '<img alt="Photo of ' . $pet_name . '" src="' . $photo . '">';
+                        }
+                        
                     }
                 }
             }
         }
     }
+
+    // If no photos have been uploaded for the pet
     else {
-        foreach ( $pet->media->photos->photo as $photo ) {
-            foreach( $photo->attributes() as $key => $value ) {
-                if ( $key == 'size' ) {
-                    if ( $value == $pet_photo_size ) {
-                        $pet_photos .= '<br>' . '<img alt="Photo of ' . $pet_name . '" src="' . $photo . '">';
-                    }
-                }
-            }
-        }
+        $pet_photos = ''; // Add a URL for a fallback/placeholder photo
     }
 
     return $pet_photos;
@@ -199,6 +205,25 @@ function get_pet_description($pet_description) {
 
 
 /* =============================================================
+    PET LIST CONDENSER
+    Removes spacing and special characters from strings.
+ * ============================================================= */
+
+function pet_value_condensed($pet_value) {
+
+    // Define characters to remove and remove them
+    $condense_list = array('(' => '', ')' => '', '&' => '-', '/' => '-', '  ' => '-', ' ' => '-');
+    $pet_value = strtr($pet_value, $condense_list);
+
+    // Return condensed list
+    return $pet_value;
+    
+}
+
+
+
+
+/* =============================================================
     PET TYPE LIST
     List of available types of pets (dog, cat, horse, etc.)
  * ============================================================= */
@@ -223,8 +248,7 @@ function get_type_list() {
     foreach( $types as $type ) {
 
         // Create a condensed version without spaces or special characters
-        $type_condense_values = array('(' => '', ')' => '', '&' => '-', '/' => '-', '  ' => '-', ' ' => '-');
-        $type_condensed = strtr($type, $type_condense_values);
+        $type_condensed = pet_value_condensed($type);
 
         // Create a list
         $type_list .= $type . ' / ' . $type_condensed . '<br>';
@@ -266,8 +290,7 @@ function get_breed_list() {
     foreach( $breeds as $breed ) {
 
         // Create a condensed version without spaces or special characters
-        $breed_condense_values = array('(' => '', ')' => '', '&' => '-', '/' => '-', '  ' => '-', ' ' => '-');
-        $breed_condensed = strtr($breed, $breed_condense_values);
+        $breed_condensed = pet_value_condensed($breed);
 
         // Create a list
         $breed_list .= $breed . ' / ' . $breed_condensed . '<br>';
@@ -307,8 +330,7 @@ function get_size_list() {
     foreach( $sizes as $size ) {
 
         // Create a condensed version without spaces or special characters
-        $size_condense_values = array('(' => '', ')' => '', '&' => '-', '/' => '-', '  ' => '-', ' ' => '-');
-        $size_condensed = strtr($size, $size_condense_values);
+        $size_condensed = pet_value_condensed($size);
 
         // Create a list
         $size_list .= $size . ' / ' . $size_condensed . '<br>';
@@ -348,8 +370,7 @@ function get_age_list() {
     foreach( $ages as $age ) {
 
         // Create a condensed version without spaces or special characters
-        $age_condense_values = array('(' => '', ')' => '', '&' => '-', '/' => '-', '  ' => '-', ' ' => '-');
-        $age_condensed = strtr($age, $age_condense_values);
+        $age_condensed = pet_value_condensed($age);
 
         // Create a list
         $age_list .= $age . ' / ' . $age_condensed . '<br>';
@@ -389,8 +410,7 @@ function get_gender_list() {
     foreach( $genders as $gender ) {
 
         // Create a condensed version without spaces or special characters
-        $gender_condense_values = array('(' => '', ')' => '', '&' => '-', '/' => '-', '  ' => '-', ' ' => '-');
-        $gender_condensed = strtr($gender, $gender_condense_values);
+        $gender_condensed = pet_value_condensed($gender);
 
         // Create a list
         $gender_list .= $gender . ' / ' . $gender_condensed . '<br>';
@@ -432,8 +452,7 @@ function get_options_list() {
     foreach( $options as $option ) {
 
         // Create a condensed version without spaces or special characters
-        $option_condense_values = array('(' => '', ')' => '', '&' => '-', '/' => '-', '  ' => '-', ' ' => '-');
-        $option_condensed = strtr($option, $option_condense_values);
+        $option_condensed = pet_value_condensed($option);
 
         // Create a list
         $option_list .= $option . ' / ' . $option_condensed . '<br>';
@@ -478,6 +497,14 @@ function get_pet_info() {
             $pet_breeds .= '<br>' . $breed;
         }
 
+        // Get list of condensed breed(s)
+        // Can be used as classes for filtering with JavaScript.
+        // Can be duplicated with other values, too.
+        $pet_breeds_condensed = '';
+        foreach( $pet->breeds->breed as $breed ) {
+            $pet_breeds_condensed .= '<br>' . pet_value_condensed($breed);
+        }
+
         // Get list of all pet options
         $pet_options = '';
         foreach( $pet->options->option as $option ) {
@@ -488,11 +515,12 @@ function get_pet_info() {
         $pet_info .=    '<h3>' . $pet_name . '</h3>' .
                         '<strong>Type:</strong> ' . $pet_type . '<br>' .
                         '<strong>Breed(s):</strong> ' . $pet_breeds . '<br>' .
+                        '<strong>Condensed Breed(s):</strong> ' . $pet_breeds_condensed . '<br>' .
                         '<strong>Size:</strong> ' . $pet_size . '<br>' .
                         '<strong>Age:</strong> ' . $pet_age . '<br>' .
                         '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
                         '<strong>Options:</strong> ' . $pet_options . '<br>' .
-                        '<strong>URL:</strong> ' . $pet_url . '<br>' .
+                        '<strong>URL:</strong> <a href="' . $pet_url . '">' . $pet_url . '</a><br>' .
                         '<strong>Photos:</strong> ' . $pet_photos . '<br>' .
                         '<strong>Description:</strong> ' . $pet_description;
 
