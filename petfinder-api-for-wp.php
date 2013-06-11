@@ -492,23 +492,20 @@ function get_pet_info() {
         $pet_description = get_pet_description($pet->description);
 
         // Get list of breed(s)
+        // Condensed list can be used as classes for filtering with JavaScript.
+        // Approach can be used with other values, too.
         $pet_breeds = '';
         foreach( $pet->breeds->breed as $breed ) {
-            $pet_breeds .= '<br>' . $breed;
-        }
-
-        // Get list of condensed breed(s)
-        // Can be used as classes for filtering with JavaScript.
-        // Can be duplicated with other values, too.
-        $pet_breeds_condensed = '';
-        foreach( $pet->breeds->breed as $breed ) {
-            $pet_breeds_condensed .= '<br>' . pet_value_condensed($breed);
+            $pet_breeds .= '<br>' . $breed; // Regular list
+            $pet_breeds_condensed .= ' ' . pet_value_condensed($breed); // Condensed list
         }
 
         // Get list of all pet options
+        // Like Breeds, features a condensed list, too.
         $pet_options = '';
         foreach( $pet->options->option as $option ) {
-            $pet_options .= '<br>' . get_pet_option($option);
+            $pet_options .= '<br>' . get_pet_option($option); // Regular list
+            $pet_options_condensed .= ' ' . pet_value_condensed($option); // Condensed list
         }
         
         // Compile pet info
