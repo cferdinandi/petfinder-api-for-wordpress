@@ -1,10 +1,12 @@
 # The Petfinder API for WordPress Toolkit
-A collection of PHP, CSS and JavaScript to help you display a list of animals available for adoption on your WordPress site using the Petfinder API.
+A collection of PHP functions to help you display Petfinder listings on your WordPress site.
 
 ## How It Works
-To get started, [view the online tutorial](http://cferdinandi.github.com/petfinder-api-for-wordpress/) for the Petfinder API for WordPress toolkit.
+To get started, [view the online tutorial](http://cferdinandi.github.com/petfinder-api-for-wordpress/) or dig through the `petfinder-api-for-wp.php` file.
 
 ## Changelog
+* v2.0 (June 11, 2013)
+  * Completely redesigned toolkit.
 * v1.4 (April 1, 2013)
   * Fixed display glitch for special needs categories.
   * Updated documentation.
