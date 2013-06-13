@@ -240,7 +240,7 @@ function get_type_list() {
         $types .= get_pet_type($pet->animal) . "|";
     }
 
-    // Remove duplicates and convert into an array
+    // Remove duplicates, convert into an array, and alphabetize
     $types = array_filter(array_unique(explode('|', $types)));
     asort($types);
 
@@ -282,7 +282,7 @@ function get_breed_list() {
         }
     }
 
-    // Remove duplicates and convert into an array
+    // Remove duplicates, convert into an array and alphabetize
     $breeds = array_filter(array_unique(explode('|', $breeds)));
     asort($breeds);
 
@@ -322,9 +322,10 @@ function get_size_list() {
         $sizes .= get_pet_size($pet->size) . "|";
     }
 
-    // Remove duplicates and convert into an array
+    // Remove duplicates, convert into an array, alphabetize and reverse list order
     $sizes = array_filter(array_unique(explode('|', $sizes)));
     asort($sizes);
+    $sizes = array_reverse($sizes);
 
     // For each size of pet
     foreach( $sizes as $size ) {
@@ -362,9 +363,8 @@ function get_age_list() {
         $ages .= get_pet_age($pet->age) . "|";
     }
 
-    // Remove duplicates and convert into an array
-    $ages = array_filter(array_unique(explode('|', $ages)));
-    asort($ages);
+    // Remove duplicates, convert into an array and reverse list order
+    $ages = array_reverse(array_filter(array_unique(explode('|', $ages))));
 
     // For each pet age
     foreach( $ages as $age ) {
@@ -404,7 +404,6 @@ function get_gender_list() {
 
     // Remove duplicates and convert into an array
     $genders = array_filter(array_unique(explode('|', $genders)));
-    asort($genders);
 
     // For each pet gender
     foreach( $genders as $gender ) {
@@ -444,9 +443,8 @@ function get_options_list() {
         }
     }
 
-    // Remove duplicates and convert into an array
-    $options = array_filter(array_unique(explode('|', $options)));
-    asort($options);
+    // Remove duplicates, convert into an array and reverse list order
+    $options = array_reverse(array_filter(array_unique(explode('|', $options))));
 
     // For each pet option
     foreach( $options as $option ) {
