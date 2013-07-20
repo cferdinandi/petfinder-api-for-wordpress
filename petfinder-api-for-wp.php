@@ -107,23 +107,31 @@ function get_pet_option($pet_option) {
 /* =============================================================
     PET PHOTO SETTINGS
     Set size and number of pet photos.
+    Size options: large, medium, thumb_small, thumb_medium, thumb_large
+    Limit: true = just show one photo, false = show all
  * ============================================================= */
 
-function get_pet_photos($pet) {
+function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
+
+    // Set size
+    if ( $photo_size == 'large' ) {
+        $pet_photo_size = 'x';
+    }
+    if ( $photo_size == 'medium' ) {
+        $pet_photo_size = 'pn';
+    }
+    if ( $photo_size == 'thumb_small' ) {
+        $pet_photo_size = 't';
+    }
+    if ( $photo_size == 'thumb_medium' ) {
+        $pet_photo_size = 'pnt';
+    }
+    if ( $photo_size == 'thumb_large' ) {
+        $pet_photo_size = 'fpm';
+    }
 
     // Define Variables
     $pet_photos = '';
-
-    // Photo Sizes
-    $pet_photo_large = 'x'; // original, up to 500x500
-    $pet_photo_medium = 'pn'; // up to 320x250
-    $pet_photo_thumbnail_small = 't'; // scaled to 50px tall
-    $pet_photo_thumbnail_medium = 'pnt'; // scaled to 60px wide
-    $pet_photo_thumbnail_large = 'fpm'; // scaled to 95px wide
-
-    // Set Photo Options
-    $pet_photo_size = $pet_photo_medium; // change as desired
-    $pet_photo_limit_number = true; // limit number of photos to just first photo? true = yes
 
     // If pet has photos
     if( count($pet->media->photos) > 0 ) {
@@ -135,7 +143,7 @@ function get_pet_photos($pet) {
                     if ( $value == $pet_photo_size ) {
 
                         // If limit set on number of photos, get the first photo
-                        if ( $pet_photo_limit_number == true ) {
+                        if ( $limit == true ) {
                             $pet_photos = '<img alt="Photo of ' . $pet_name . '" src="' . $photo . '">';
                             break;
                         }
@@ -483,7 +491,8 @@ function get_pet_info($pets) {
         $pet_age = get_pet_age($pet->age);
         $pet_gender = get_pet_gender($pet->sex);
         $pet_url = 'http://www.petfinder.com/petdetail/' . $pet->id;
-        $pet_photos = get_pet_photos($pet);
+        $pet_photo_thumbnail = get_pet_photos($pet, 'thumb_large');
+        $pet_photo_all = get_pet_photos ($pet, 'large', false);
         $pet_description = get_pet_description($pet->description);
 
         // Get list of breed(s)
@@ -513,7 +522,8 @@ function get_pet_info($pets) {
                         '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
                         '<strong>Options:</strong> ' . $pet_options . '<br>' .
                         '<strong>URL:</strong> <a href="' . $pet_url . '">' . $pet_url . '</a><br>' .
-                        '<strong>Photos:</strong> ' . $pet_photos . '<br>' .
+                        '<strong>Thumbnail:</strong> ' . $pet_photo_thumb . '<br>' .
+                        '<strong>All Photos:</strong> ' . $pet_photo_all . '<br>' .
                         '<strong>Description:</strong> ' . $pet_description;
 
     }
