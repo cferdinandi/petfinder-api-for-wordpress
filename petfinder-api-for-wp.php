@@ -2,7 +2,7 @@
 
 /* ======================================================================
 
-    Petfinder API for WordPress v2.0
+    Petfinder API for WordPress v3.0
     A collection of functions to help you display Petfinder listings
     on your WordPress site, by Chris Ferdinandi.
     http://gomakethings.com
@@ -21,23 +21,34 @@
     Get your shelter info from Petfinder.
  * ============================================================= */
 
-function get_petfinder_data() {
+function get_petfinder_data($pet = '') {
 
     // Your Account Info
     $api_key = 'xxxx'; // Change to your API key
     $shelter_id = 'xxxx'; // Change to your shelter ID
     $count = '20'; // Number of animals to return. Set to higher than total # of animals in your shelter.
 
-    // Create the request URL
-    $request_url = "http://api.petfinder.com/shelter.getPets?key=" . $api_key . "&count=" . $count . "&id=" . $shelter_id . "&status=A&output=full";
+    // If no specific pet is specified
+    if ( $pet == '' ) {
+        // Create request URL for all pets from the shelter
+        $request_url = 'http://api.petfinder.com/shelter.getPets?key=' . $api_key . '&count=' . $count . '&id=' . $shelter_id . '&status=A&output=full';
+    }
 
-    // Request shelter data from Petfinder
+    // If a specific pet IS specified
+    else {
+        // Create a request URL for that specific pet's data
+        $request_url = 'http://api.petfinder.com/pet.get?key=' . $api_key . '&id=' . $pet;
+    }
+
+    // Request data from Petfinder
     $petfinder_data = @simplexml_load_file( $request_url );
 
-    return $petfinder_data;
-    
-}
+    // If data not available, don't display errors on page
+    if ($petfinder_data === false) {}
 
+    return $petfinder_data;
+
+}
 
 
 
@@ -49,12 +60,25 @@ function get_petfinder_data() {
     human-readable and/or custom descriptions.
  * ============================================================= */
 
+// Convert Pet Animal Type
+function get_pet_type($pet_type) {
+    if ($pet_type == 'Dog') return 'Dog';
+    if ($pet_type == 'Cat') return 'Cat';
+    if ($pet_type == 'Small&amp;Furry') return 'Small & Furry';
+    if ($pet_type == 'BarnYard') return 'Barnyard';
+    if ($pet_type == 'Horse') return 'Horse';
+    if ($pet_type == 'Pig') return 'Pig';
+    if ($pet_type == 'Rabbit') return 'Rabbit';
+    if ($pet_type == 'Reptile') return 'Scales, Fins & Other';
+    return 'Not Known';
+}
+
 // Convert Pet Size
 function get_pet_size($pet_size) {
     if ($pet_size == 'S') return 'Small';
     if ($pet_size == 'M') return 'Medium';
     if ($pet_size == 'L') return 'Large';
-    if ($pet_size == 'XL') return 'Extra-Large';
+    if ($pet_size == 'XL') return 'Extra Large';
     return 'Not Known';
 }
 
@@ -71,19 +95,6 @@ function get_pet_age($pet_age) {
 function get_pet_gender($pet_gender) {
     if ($pet_gender == 'M') return 'Male';
     if ($pet_gender == 'F') return 'Female';
-    return 'Not Known';
-}
-
-// Convert Pet Animal Type
-function get_pet_type($pet_type) {
-    if ($pet_type == 'Dog') return 'Dog';
-    if ($pet_type == 'Cat') return 'Cat';
-    if ($pet_type == 'Small&amp;Furry') return 'Small & Furry';
-    if ($pet_type == 'BarnYard') return 'Barnyard';
-    if ($pet_type == 'Horse') return 'Horse';
-    if ($pet_type == 'Pig') return 'Pig';
-    if ($pet_type == 'Rabbit') return 'Rabbit';
-    if ($pet_type == 'Reptile') return 'Scales, Fins & Other';
     return 'Not Known';
 }
 
@@ -107,8 +118,6 @@ function get_pet_option($pet_option) {
 /* =============================================================
     PET PHOTO SETTINGS
     Set size and number of pet photos.
-    Size options: large, medium, thumb_small, thumb_medium, thumb_large
-    Limit: true = just show one photo, false = show all
  * ============================================================= */
 
 function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
@@ -144,13 +153,13 @@ function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
 
                         // If limit set on number of photos, get the first photo
                         if ( $limit == true ) {
-                            $pet_photos = '<img alt="Photo of ' . $pet_name . '" src="' . $photo . '">';
+                            $pet_photos = '<p><img alt="Photo of ' . $pet_name . '" src="' . $photo . '"></p>';
                             break;
                         }
 
                         // Otherwise, get all of them
                         else {
-                            $pet_photos .= '<img alt="Photo of ' . $pet_name . '" src="' . $photo . '">';
+                            $pet_photos .= '<p><img alt="Photo of ' . $pet_name . '" src="' . $photo . '"></p>';
                         }
                         
                     }
@@ -161,7 +170,7 @@ function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
 
     // If no photos have been uploaded for the pet
     else {
-        $pet_photos = ''; // Add a URL for a fallback/placeholder photo
+        $pet_photos = '<p>No Photo Available</p>'; // Add a fallback/placeholder photo
     }
 
     return $pet_photos;
@@ -218,7 +227,7 @@ function get_pet_description($pet_description) {
 
 
 /* =============================================================
-    PET VALUE CONDENSER
+    PET LIST CONDENSER
     Removes spacing and special characters from strings.
  * ============================================================= */
 
@@ -232,6 +241,7 @@ function pet_value_condensed($pet_value) {
     return $pet_value;
     
 }
+
 
 
 
@@ -472,15 +482,45 @@ function get_options_list($pets) {
 
 
 
+/* =============================================================
+    PET OPTIONS LIST
+    Get a list of options for a specific pet.
+ * ============================================================= */
+ 
+function get_pet_options_list($pet) {
+
+    // Define Variables
+    $pet_options = '';
+
+    // For each option
+    foreach( $pet->options->option as $option ) {
+    
+        // Get option value
+        $get_option = get_pet_option($option);
+
+        // If option value has been set
+        if ( $get_option != '' ) {
+            $pet_options .= '<br>' . $get_option;
+        }
+        
+    }
+
+    return $pet_options;
+
+}
+
+
+
+
 
 /* =============================================================
-    PET INFORMATION
-    Get and display information on each pet.
+    PET LIST
+    Get a list of all available pets.
  * ============================================================= */
 
-function get_pet_info($pets) {
+function get_pet_list($pets) {
 
-    $pet_info = '';
+    $pet_list = '';
 
     foreach( $pets as $pet ) {
 
@@ -490,46 +530,112 @@ function get_pet_info($pets) {
         $pet_size = get_pet_size($pet->size);
         $pet_age = get_pet_age($pet->age);
         $pet_gender = get_pet_gender($pet->sex);
-        $pet_url = 'http://www.petfinder.com/petdetail/' . $pet->id;
-        $pet_photo_thumbnail = get_pet_photos($pet, 'thumb_large');
-        $pet_photo_all = get_pet_photos ($pet, 'large', false);
+        $pet_options = get_pet_options_list($pet);
         $pet_description = get_pet_description($pet->description);
+        $pet_photo_thumbnail = get_pet_photos($pet, 'medium');
+        $pet_photo_all = get_pet_photos ($pet, 'large', false);
+        $pet_more_url = get_permalink() . '?view=pet-details&id=' . $pet->id;
+        $pet_pf_url = 'http://www.petfinder.com/petdetail/' . $pet->id;
 
-        // Get list of breed(s)
-        // Condensed list can be used as classes for filtering with JavaScript.
-        // Approach can be used with other values, too.
-        $pet_breeds = '';
+        // Create breed classes
+        $pet_breeds_condensed = '';
         foreach( $pet->breeds->breed as $breed ) {
-            $pet_breeds .= '<br>' . $breed; // Regular list
-            $pet_breeds_condensed .= ' ' . pet_value_condensed($breed); // Condensed list
+            $pet_breeds_condensed .= pet_value_condensed($breed) . ' ';
         }
 
-        // Get list of all pet options
-        // Like Breeds, features a condensed list, too.
-        $pet_options = '';
-        foreach( $pet->options->option as $option ) {
-            $pet_options .= '<br>' . get_pet_option($option); // Regular list
-            $pet_options_condensed .= ' ' . pet_value_condensed($option); // Condensed list
+        // Create options classes
+        $pet_options_condensed = '';
+        foreach( $pet->options->option as $option ) {        
+            $option = get_pet_option($option);
+            if ( $option != '' ) {
+                $pet_options_condensed .= pet_value_condensed($option) . ' ';                
+            }
         }
-        
+
+
         // Compile pet info
-        $pet_info .=    '<h3>' . $pet_name . '</h3>' .
-                        '<strong>Type:</strong> ' . $pet_type . '<br>' .
-                        '<strong>Breed(s):</strong> ' . $pet_breeds . '<br>' .
-                        '<strong>Condensed Breed(s):</strong> ' . $pet_breeds_condensed . '<br>' .
-                        '<strong>Size:</strong> ' . $pet_size . '<br>' .
-                        '<strong>Age:</strong> ' . $pet_age . '<br>' .
-                        '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
-                        '<strong>Options:</strong> ' . $pet_options . '<br>' .
-                        '<strong>URL:</strong> <a href="' . $pet_url . '">' . $pet_url . '</a><br>' .
-                        '<strong>Thumbnail:</strong> ' . $pet_photo_thumb . '<br>' .
-                        '<strong>All Photos:</strong> ' . $pet_photo_all . '<br>' .
-                        '<strong>Description:</strong> ' . $pet_description;
+        // Add $pet_options and $pet_breeds as classes and meta info
+        $pet_list .=    '<div class="' . pet_value_condensed($pet_type) . ' ' . pet_value_condensed($pet_size) . ' ' . pet_value_condensed($pet_age) . ' ' . pet_value_condensed($pet_gender) . ' ' . $pet_breeds_condensed . ' ' . $pet_options_condensed . '">' .
+
+                            $pet_photo_thumbnail .
+
+                            '<strong>Name:</strong> ' . $pet_name . '<br>' .
+                            '<strong>Animal:</strong> ' . $pet_type . '<br>' .
+                            '<strong>Size:</strong> ' . $pet_size . '<br>' .
+                            '<strong>Age:</strong> ' . $pet_age . '<br>' .
+                            '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
+                            
+                            '<br><strong>Options:</strong>' . $pet_options . '<br>' .
+
+                            '<br><strong>Learn More:</strong> <a href="' . $pet_more_url . '">' . $pet_more_url . '</a><br>' .
+                            '<strong>Petfinder Profile:</strong>  <a href="' . $pet_pf_url . '">' . $pet_pf_url . '</a><br>' .
+
+                            '<br><strong>Description:</strong><br>' . $pet_description . '<br>' .
+                            
+                            '<br><strong>Photos:</strong><br>' . $pet_photo_all .
+                             
+                        '</div>';
 
     }
 
+    // Return pet list
+    return $pet_list;
+
+}
+
+
+
+
+
+
+/* =============================================================
+    PET INFORMATION
+    Get and display information on a specific pet.
+ * ============================================================= */
+
+function get_pet_info($pet) {
+
+    // Define Variables
+    $pet_name = get_pet_name($pet->name);
+    $pet_type = get_pet_type($pet->animal);
+    $pet_size = get_pet_size($pet->size);
+    $pet_age = get_pet_age($pet->age);
+    $pet_gender = get_pet_gender($pet->sex);
+    $pet_options = get_pet_options_list($pet);
+    $pet_description = get_pet_description($pet->description);
+    $pet_photo_thumbnail = get_pet_photos($pet, 'medium');
+    $pet_photo_all = get_pet_photos ($pet, 'large', false);
+    $pet_pf_url = 'http://www.petfinder.com/petdetail/' . $pet->id;
+    $all_pets_url = get_permalink();
+
+    // Get list of breed(s)
+    $pet_breeds = '';
+    foreach( $pet->breeds->breed as $breed ) {
+        $pet_breeds .= '<br>' . $breed;
+    }
+
+
+    // Compile pet info
+    $pet_info = '<p><a href="' . $all_pets_url . '">&larr; Back to All Pets</a></p>' .
+
+                $pet_photo_thumbnail .
+
+                '<strong>Name:</strong> ' . $pet_name . '<br>' .
+                '<strong>Animal:</strong> ' . $pet_type . '<br>' .
+                '<strong>Size:</strong> ' . $pet_size . '<br>' .
+                '<strong>Age:</strong> ' . $pet_age . '<br>' .
+                '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
+                
+                '<br><strong>Options:</strong>' . $pet_options . '<br>' .
+
+                '<strong>Petfinder Profile:</strong>  <a href="' . $pet_pf_url . '">' . $pet_pf_url . '</a><br>' .
+
+                '<br><strong>Description:</strong><br>' . $pet_description . '<br>' .
+                
+                '<br><strong>Photos:</strong><br>' . $pet_photo_all;
+
     // Return pet info
-    return '<h2>Pet Info</h2>' . $pet_info;
+    return $pet_info;
 
 }
 
@@ -542,46 +648,78 @@ function get_pet_info($pets) {
     Compile lists and pet info, and display via a shortcode.
  * ============================================================= */
 
-function get_petfinder_list() {
+function display_petfinder_list() {
 
-    // Access Petfinder Data
-    $petfinder_data = get_petfinder_data();
+    // Define variables
     $petfinder_list = '';
+    $petfinder_view = $_GET['view'];
 
-    // If the API returns without errors
-    if( $petfinder_data->header->status->code == "100" ) {
-    
-        // If there is at least one animal
-        if( count( $petfinder_data->pets->pet ) > 0 ) {
 
-            // Set $pets variable
-            $pets = $petfinder_data->pets->pet;
+    // Display info on a specific dog
+    if ( $petfinder_view == 'pet-details' ) {
+
+        // Access Petfinder Data
+        $pet_id = $_GET['id'];
+        $petfinder_data = get_petfinder_data($pet_id);
+
+        // If the API returns without errors
+        if( $petfinder_data->header->status->code == '100' ) {
+
+            $pet = $petfinder_data->pet;
 
             // Compile information that you want to include
-            $petfinder_list =   get_type_list($pets) . '<br>' .
-                                get_breed_list($pets) . '<br>' .
-                                get_size_list($pets) . '<br>' .
-                                get_age_list($pets) . '<br>' .
-                                get_gender_list($pets) . '<br>' .
-                                get_options_list($pets) . '<br>' .
-                                get_pet_info($pets);
-
+            $petfinder_list = get_pet_info($pet);
         }
 
-        // If no animals are available for adoption
+        // If error code is returned
         else {
-            $petfinder_list = '<p>We don\'t have any pets available for adoption at this time. Sorry! Please check back soon.</p>';
+            $petfinder_list = '<p>There isn\'t any information currently available for this pet. Sorry!</p>';
         }
+        
     }
 
-    // If error code is returned
+    // Display a list of all available dogs
     else {
-        $petfinder_list = '<p>Petfinder is down for the moment. Please check back shortly.</p>';
+
+        // Access Petfinder Data
+        $petfinder_data = get_petfinder_data();
+
+        // If the API returns without errors
+        if( $petfinder_data->header->status->code == '100' ) {
+        
+            // If there is at least one animal
+            if( count( $petfinder_data->pets->pet ) > 0 ) {
+
+                $pets = $petfinder_data->pets->pet;
+
+                // Compile information that you want to include
+                $petfinder_list =   get_type_list($pets).   
+                                    get_age_list($pets) .
+                                    get_size_list($pets) .
+                                    get_gender_list($pets) .
+                                    get_options_list($pets) .
+                                    get_breed_list($pets) .
+                                    '<h2>Pets</h2>' . get_pet_list($pets);
+
+            }
+
+            // If no animals are available for adoption
+            else {
+                $petfinder_list = '<p>We don\'t have any pets available for adoption at this time. Sorry! Please check back soon.</p>';
+            }
+        }
+
+        // If error code is returned
+        else {
+            $petfinder_list = '<p>Petfinder is down for the moment. Please check back shortly.</p>';
+        }
+
     }
+
 
     return $petfinder_list;
     
 }
-add_shortcode('petfinder_list','get_petfinder_list');
+add_shortcode('petfinder_list','display_petfinder_list');
 
 ?>
