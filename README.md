@@ -5,6 +5,9 @@ A collection of PHP functions to help you display Petfinder listings on your Wor
 To get started, [view the online tutorial](http://cferdinandi.github.com/petfinder-api-for-wordpress/) or dig through the `petfinder-api-for-wp.php` file.
 
 ## Changelog
+* v3.0 (July 29, 2013)
+  * `get_pet_photos()` now accepts arguments.
+  * Two separate functions for all pets and individual pet profiles.
 * v2.1 (July 12, 2013)
   * Performance fix.
 * v2.0 (June 11, 2013)
