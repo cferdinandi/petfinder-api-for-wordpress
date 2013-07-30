@@ -154,7 +154,7 @@ function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
                         // If limit set on number of photos, get the first photo
                         if ( $limit == true ) {
                             $pet_photos = '<p><img alt="Photo of ' . $pet_name . '" src="' . $photo . '"></p>';
-                            break;
+                            break 2;
                         }
 
                         // Otherwise, get all of them
