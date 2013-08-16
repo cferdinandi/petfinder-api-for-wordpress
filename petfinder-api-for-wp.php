@@ -118,6 +118,8 @@ function get_pet_option($pet_option) {
 /* =============================================================
     PET PHOTO SETTINGS
     Set size and number of pet photos.
+    $photo_size options: large, medium, thumb_small, thumb_medium, thumb_large
+    $limit: true (default) = only show one. false = show all.
  * ============================================================= */
 
 function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
@@ -603,7 +605,7 @@ function get_pet_info($pet) {
     $pet_gender = get_pet_gender($pet->sex);
     $pet_options = get_pet_options_list($pet);
     $pet_description = get_pet_description($pet->description);
-    $pet_photo_thumbnail = get_pet_photos($pet, 'medium');
+    $pet_photo_thumbnail = get_pet_photos($pet, 'medium'); // Size Options: large, medium, thumb_small, thumb_medium, thumb_large
     $pet_photo_all = get_pet_photos ($pet, 'large', false); // Size Options: large, medium, thumb_small, thumb_medium, thumb_large
     $pet_pf_url = 'http://www.petfinder.com/petdetail/' . $pet->id;
     $all_pets_url = get_permalink();
