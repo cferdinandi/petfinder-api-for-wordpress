@@ -21,12 +21,7 @@
     Get your shelter info from Petfinder.
  * ============================================================= */
 
-function get_petfinder_data($pet = '') {
-
-    // Your Account Info
-    $api_key = 'xxxx'; // Change to your API key
-    $shelter_id = 'xxxx'; // Change to your shelter ID
-    $count = '20'; // Number of animals to return. Set to higher than total # of animals in your shelter.
+function get_petfinder_data($api_key, $shelter_id, $count, $pet = '') {
 
     // If no specific pet is specified
     if ( $pet == '' ) {
@@ -229,7 +224,7 @@ function get_pet_description($pet_description) {
 
 
 /* =============================================================
-    PET LIST CONDENSER
+    PET VALUE CONDENSER
     Removes spacing and special characters from strings.
  * ============================================================= */
 
@@ -516,13 +511,13 @@ function get_pet_options_list($pet) {
 
 
 /* =============================================================
-    PET LIST
+    GET ALL PETS
     Get a list of all available pets.
  * ============================================================= */
 
-function get_pet_list($pets) {
+function get_all_pets($pets) {
 
-    $pet_list = '';
+    $pet_list = '<h2>Pets</h2>';
 
     foreach( $pets as $pet ) {
 
@@ -559,24 +554,24 @@ function get_pet_list($pets) {
         // Add $pet_options and $pet_breeds as classes and meta info
         $pet_list .=    '<div class="' . pet_value_condensed($pet_type) . ' ' . pet_value_condensed($pet_size) . ' ' . pet_value_condensed($pet_age) . ' ' . pet_value_condensed($pet_gender) . ' ' . $pet_breeds_condensed . ' ' . $pet_options_condensed . '">' .
 
-                            $pet_photo_thumbnail .
+                        $pet_photo_thumbnail .
 
-                            '<strong>Name:</strong> ' . $pet_name . '<br>' .
-                            '<strong>Animal:</strong> ' . $pet_type . '<br>' .
-                            '<strong>Size:</strong> ' . $pet_size . '<br>' .
-                            '<strong>Age:</strong> ' . $pet_age . '<br>' .
-                            '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
-                            
-                            '<br><strong>Options:</strong>' . $pet_options . '<br>' .
+                        '<strong>Name:</strong> ' . $pet_name . '<br>' .
+                        '<strong>Animal:</strong> ' . $pet_type . '<br>' .
+                        '<strong>Size:</strong> ' . $pet_size . '<br>' .
+                        '<strong>Age:</strong> ' . $pet_age . '<br>' .
+                        '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
+                        
+                        '<br><strong>Options:</strong>' . $pet_options . '<br>' .
 
-                            '<br><strong>Learn More:</strong> <a href="' . $pet_more_url . '">' . $pet_more_url . '</a><br>' .
-                            '<strong>Petfinder Profile:</strong>  <a href="' . $pet_pf_url . '">' . $pet_pf_url . '</a><br>' .
+                        '<br><strong>Learn More:</strong> <a href="' . $pet_more_url . '">' . $pet_more_url . '</a><br>' .
+                        '<strong>Petfinder Profile:</strong>  <a href="' . $pet_pf_url . '">' . $pet_pf_url . '</a><br>' .
 
-                            '<br><strong>Description:</strong><br>' . $pet_description . '<br>' .
-                            
-                            '<br><strong>Photos:</strong><br>' . $pet_photo_all .
-                             
-                        '</div>';
+                        '<br><strong>Description:</strong><br>' . $pet_description . '<br>' .
+                        
+                        '<br><strong>Photos:</strong><br>' . $pet_photo_all .
+                         
+                    '</div>';
 
     }
 
@@ -591,11 +586,11 @@ function get_pet_list($pets) {
 
 
 /* =============================================================
-    PET INFORMATION
+    GET ONE PET
     Get and display information on a specific pet.
  * ============================================================= */
 
-function get_pet_info($pet) {
+function get_one_pet($pet) {
 
     // Define Variables
     $pet_name = get_pet_name($pet->name);
@@ -650,7 +645,14 @@ function get_pet_info($pet) {
     Compile lists and pet info, and display via a shortcode.
  * ============================================================= */
 
-function display_petfinder_list() {
+function display_petfinder_list($atts) {
+
+    // Extract shortcode values
+    extract(shortcode_atts(array(
+        'api_key' => '',
+        'shelter_id' => '',
+        'count' => '20'
+    ), $atts));
 
     // Define variables
     $petfinder_list = '';
@@ -662,7 +664,7 @@ function display_petfinder_list() {
 
         // Access Petfinder Data
         $pet_id = $_GET['id'];
-        $petfinder_data = get_petfinder_data($pet_id);
+        $petfinder_data = get_petfinder_data($api_key, $shelter_id, $count, $pet_id);
 
         // If the API returns without errors
         if( $petfinder_data->header->status->code == '100' ) {
@@ -670,7 +672,7 @@ function display_petfinder_list() {
             $pet = $petfinder_data->pet;
 
             // Compile information that you want to include
-            $petfinder_list = get_pet_info($pet);
+            $petfinder_list = get_one_pet($pet);
         }
 
         // If error code is returned
@@ -684,7 +686,7 @@ function display_petfinder_list() {
     else {
 
         // Access Petfinder Data
-        $petfinder_data = get_petfinder_data();
+        $petfinder_data = get_petfinder_data($api_key, $shelter_id, $count);
 
         // If the API returns without errors
         if( $petfinder_data->header->status->code == '100' ) {
@@ -701,7 +703,7 @@ function display_petfinder_list() {
                                     get_gender_list($pets) .
                                     get_options_list($pets) .
                                     get_breed_list($pets) .
-                                    '<h2>Pets</h2>' . get_pet_list($pets);
+                                    get_all_pets($pets);
 
             }
 
