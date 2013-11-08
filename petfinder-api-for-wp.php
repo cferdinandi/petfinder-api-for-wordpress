@@ -2,7 +2,7 @@
 
 /* ======================================================================
 
-    Petfinder API for WordPress v3.0
+    Petfinder API for WordPress v4.1
     A collection of functions to help you display Petfinder listings
     on your WordPress site, by Chris Ferdinandi.
     http://gomakethings.com
@@ -12,7 +12,7 @@
 
     Free to use under the MIT License.
     http://gomakethings.com/mit/
-    
+
  * ====================================================================== */
 
 
@@ -158,7 +158,7 @@ function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
                         else {
                             $pet_photos .= '<p><img alt="Photo of ' . $pet_name . '" src="' . $photo . '"></p>';
                         }
-                        
+
                     }
                 }
             }
@@ -171,7 +171,7 @@ function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
     }
 
     return $pet_photos;
-    
+
 }
 
 
@@ -194,7 +194,7 @@ function get_pet_name($pet_name) {
 
     // Return pet name
     return $pet_name;
-    
+
 }
 
 
@@ -216,7 +216,7 @@ function get_pet_description($pet_description) {
 
     // Return pet description
     return $pet_description;
-    
+
 }
 
 
@@ -236,7 +236,7 @@ function pet_value_condensed($pet_value) {
 
     // Return condensed list
     return $pet_value;
-    
+
 }
 
 
@@ -275,7 +275,7 @@ function get_type_list($pets) {
 
     // Return the list
     return '<h2>Pet Types</h2>' . $type_list;
-    
+
 }
 
 
@@ -316,7 +316,7 @@ function get_breed_list($pets) {
 
     // Return the list
     return '<h2>Pet Breeds</h2>' . $breed_list;
-    
+
 }
 
 
@@ -356,7 +356,7 @@ function get_size_list($pets) {
 
     // Return the list
     return '<h2>Pet Sizes</h2>' . $size_list;
-    
+
 }
 
 
@@ -394,7 +394,7 @@ function get_age_list($pets) {
 
     // Return the list
     return '<h2>Pet Ages</h2>' . $age_list;
-    
+
 }
 
 
@@ -432,7 +432,7 @@ function get_gender_list($pets) {
 
     // Return the list
     return '<h2>Pet Genders</h2>' . $gender_list;
-    
+
 }
 
 
@@ -472,7 +472,7 @@ function get_options_list($pets) {
 
     // Return the list
     return '<h2>Pet Options</h2>' . $option_list;
-    
+
 }
 
 
@@ -483,7 +483,7 @@ function get_options_list($pets) {
     PET OPTIONS LIST
     Get a list of options for a specific pet.
  * ============================================================= */
- 
+
 function get_pet_options_list($pet) {
 
     // Define Variables
@@ -491,7 +491,7 @@ function get_pet_options_list($pet) {
 
     // For each option
     foreach( $pet->options->option as $option ) {
-    
+
         // Get option value
         $get_option = get_pet_option($option);
 
@@ -499,7 +499,7 @@ function get_pet_options_list($pet) {
         if ( $get_option != '' ) {
             $pet_options .= '<br>' . $get_option;
         }
-        
+
     }
 
     return $pet_options;
@@ -542,10 +542,10 @@ function get_all_pets($pets) {
 
         // Create options classes
         $pet_options_condensed = '';
-        foreach( $pet->options->option as $option ) {        
+        foreach( $pet->options->option as $option ) {
             $option = get_pet_option($option);
             if ( $option != '' ) {
-                $pet_options_condensed .= pet_value_condensed($option) . ' ';                
+                $pet_options_condensed .= pet_value_condensed($option) . ' ';
             }
         }
 
@@ -561,16 +561,16 @@ function get_all_pets($pets) {
                         '<strong>Size:</strong> ' . $pet_size . '<br>' .
                         '<strong>Age:</strong> ' . $pet_age . '<br>' .
                         '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
-                        
+
                         '<br><strong>Options:</strong>' . $pet_options . '<br>' .
 
                         '<br><strong>Learn More:</strong> <a href="' . $pet_more_url . '">' . $pet_more_url . '</a><br>' .
                         '<strong>Petfinder Profile:</strong>  <a href="' . $pet_pf_url . '">' . $pet_pf_url . '</a><br>' .
 
                         '<br><strong>Description:</strong><br>' . $pet_description . '<br>' .
-                        
+
                         '<br><strong>Photos:</strong><br>' . $pet_photo_all .
-                         
+
                     '</div>';
 
     }
@@ -622,13 +622,13 @@ function get_one_pet($pet) {
                 '<strong>Size:</strong> ' . $pet_size . '<br>' .
                 '<strong>Age:</strong> ' . $pet_age . '<br>' .
                 '<strong>Gender:</strong> ' . $pet_gender . '<br>' .
-                
+
                 '<br><strong>Options:</strong>' . $pet_options . '<br>' .
 
                 '<strong>Petfinder Profile:</strong>  <a href="' . $pet_pf_url . '">' . $pet_pf_url . '</a><br>' .
 
                 '<br><strong>Description:</strong><br>' . $pet_description . '<br>' .
-                
+
                 '<br><strong>Photos:</strong><br>' . $pet_photo_all;
 
     // Return pet info
@@ -656,11 +656,9 @@ function display_petfinder_list($atts) {
 
     // Define variables
     $petfinder_list = '';
-    $petfinder_view = $_GET['view'];
-
 
     // Display info on a specific dog
-    if ( $petfinder_view == 'pet-details' ) {
+    if ( isset( $_GET['view'] ) && $_GET['view'] == 'pet-details' ) {
 
         // Access Petfinder Data
         $pet_id = $_GET['id'];
@@ -679,7 +677,7 @@ function display_petfinder_list($atts) {
         else {
             $petfinder_list = '<p>There isn\'t any information currently available for this pet. Sorry!</p>';
         }
-        
+
     }
 
     // Display a list of all available dogs
@@ -690,14 +688,14 @@ function display_petfinder_list($atts) {
 
         // If the API returns without errors
         if( $petfinder_data->header->status->code == '100' ) {
-        
+
             // If there is at least one animal
             if( count( $petfinder_data->pets->pet ) > 0 ) {
 
                 $pets = $petfinder_data->pets->pet;
 
                 // Compile information that you want to include
-                $petfinder_list =   get_type_list($pets).   
+                $petfinder_list =   get_type_list($pets).
                                     get_age_list($pets) .
                                     get_size_list($pets) .
                                     get_gender_list($pets) .
@@ -722,7 +720,7 @@ function display_petfinder_list($atts) {
 
 
     return $petfinder_list;
-    
+
 }
 add_shortcode('petfinder_list','display_petfinder_list');
 

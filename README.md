@@ -12,6 +12,8 @@ To get started, [view the online tutorial](http://cferdinandi.github.com/petfind
   * Considering converting to plugin.
 
 ## Changelog
+* v4.1 (November 7, 2013)
+  * [Added `isset()` check for `$_GET` values to prevent errors.](https://github.com/cferdinandi/petfinder-api-for-wordpress/issues/5)
 * v4.0 (August 30, 2013)
   * Changed several function names to make them more intuitive.
   * Pass more arguments through shortcode for greater flexibility.
