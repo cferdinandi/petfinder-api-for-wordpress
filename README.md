@@ -4,14 +4,10 @@ A collection of PHP functions to help you display Petfinder listings on your Wor
 ## How It Works
 To get started, [view the online tutorial](http://cferdinandi.github.com/petfinder-api-for-wordpress/) or dig through the `petfinder-api-for-wp.php` file.
 
-## Roadmap
-* v4.1
-  * Convert generic PHP functions to WordPress specific where applicable.
-  * Add sanitization and validation for all data fields.
-* v5
-  * Considering converting to plugin.
-
 ## Changelog
+* v4.2 (February 7, 2014)
+  * Wrapped description in `<pre>` tags to preserve whitespace and formatting.
+  * Added functions to convert plain text URLs and emails to working links.
 * v4.1 (November 7, 2013)
   * [Added `isset()` check for `$_GET` values to prevent errors.](https://github.com/cferdinandi/petfinder-api-for-wordpress/issues/5)
 * v4.0 (August 30, 2013)
