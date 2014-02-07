@@ -13,6 +13,9 @@
 	Several regex patterns were adapted from Chris Coyier.
 	http://css-tricks.com/snippets/php/find-urls-in-text-make-links/
 
+	Description formatting bug fix contributed by Nick Alonge.
+	http://www.nsofttech.com/
+
 	Free to use under the MIT License.
 	http://gomakethings.com/mit/
 
