@@ -2,10 +2,13 @@
 
 /* ======================================================================
 
-	Petfinder API for WordPress v4.2
-	A collection of functions to help you display Petfinder listings
-	on your WordPress site, by Chris Ferdinandi.
-	http://gomakethings.com
+	Plugin Name: Petfinder API for WordPress
+	Plugin URI: https://github.com/cferdinandi/petfinder-api-for-wordpress
+	Description: A collection of functions to help you display Petfinder listings on your WordPress site
+	Version: 4.3
+	Author: Chris Ferdinandi
+	Author URI: http://gomakethings.com
+	License: MIT
 
 	Thanks Bridget Wessel's Petfinder Listings Plugin for getting me started.
 	http://wordpress.org/extend/plugins/petfinder-listings/
@@ -15,9 +18,6 @@
 
 	Description formatting bug fix contributed by Nick Alonge.
 	http://www.nsofttech.com/
-
-	Free to use under the MIT License.
-	http://gomakethings.com/mit/
 
  * ====================================================================== */
 
@@ -145,74 +145,6 @@ function get_text_emails($text) {
 
 
 /* =============================================================
-	PET PHOTO SETTINGS
-	Set size and number of pet photos.
-	$photo_size options: large, medium, thumb_small, thumb_medium, thumb_large
-	$limit: true (default) = only show one. false = show all.
- * ============================================================= */
-
-function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
-
-	// Set size
-	if ( $photo_size == 'large' ) {
-		$pet_photo_size = 'x';
-	}
-	if ( $photo_size == 'medium' ) {
-		$pet_photo_size = 'pn';
-	}
-	if ( $photo_size == 'thumb_small' ) {
-		$pet_photo_size = 't';
-	}
-	if ( $photo_size == 'thumb_medium' ) {
-		$pet_photo_size = 'pnt';
-	}
-	if ( $photo_size == 'thumb_large' ) {
-		$pet_photo_size = 'fpm';
-	}
-
-	// Define Variables
-	$pet_photos = '';
-
-	// If pet has photos
-	if( count($pet->media->photos) > 0 ) {
-
-		// For each photo, get photos that match the set size
-		foreach ( $pet->media->photos->photo as $photo ) {
-			foreach( $photo->attributes() as $key => $value ) {
-				if ( $key == 'size' ) {
-					if ( $value == $pet_photo_size ) {
-
-						// If limit set on number of photos, get the first photo
-						if ( $limit == true ) {
-							$pet_photos = '<p><img alt="Photo of ' . $pet_name . '" src="' . $photo . '"></p>';
-							break 2;
-						}
-
-						// Otherwise, get all of them
-						else {
-							$pet_photos .= '<p><img alt="Photo of ' . $pet_name . '" src="' . $photo . '"></p>';
-						}
-
-					}
-				}
-			}
-		}
-	}
-
-	// If no photos have been uploaded for the pet
-	else {
-		$pet_photos = '<p>No Photo Available</p>'; // Add a fallback/placeholder photo
-	}
-
-	return $pet_photos;
-
-}
-
-
-
-
-
-/* =============================================================
 	PET NAME CLEANUP
 	Adjust formatting and remove special characters from pet names.
  * ============================================================= */
@@ -253,6 +185,77 @@ function get_pet_description($pet_description) {
 
 	// Return pet description
 	return $pet_description;
+
+}
+
+
+
+
+
+/* =============================================================
+	PET PHOTO SETTINGS
+	Set size and number of pet photos.
+	$photo_size options: large, medium, thumb_small, thumb_medium, thumb_large
+	$limit: true (default) = only show one. false = show all.
+ * ============================================================= */
+
+function get_pet_photos($pet, $photo_size = 'medium', $limit = true) {
+
+	// Set size
+	if ( $photo_size == 'large' ) {
+		$pet_photo_size = 'x';
+	}
+	if ( $photo_size == 'medium' ) {
+		$pet_photo_size = 'pn';
+	}
+	if ( $photo_size == 'thumb_small' ) {
+		$pet_photo_size = 't';
+	}
+	if ( $photo_size == 'thumb_medium' ) {
+		$pet_photo_size = 'pnt';
+	}
+	if ( $photo_size == 'thumb_large' ) {
+		$pet_photo_size = 'fpm';
+	}
+
+	// Define Variables
+	$pet_photos = '';
+
+	// If pet has photos
+	if( count($pet->media->photos) > 0 ) {
+
+		// Get Pet Name
+		$pet_name = get_pet_name($pet->name);
+
+		// For each photo, get photos that match the set size
+		foreach ( $pet->media->photos->photo as $photo ) {
+			foreach( $photo->attributes() as $key => $value ) {
+				if ( $key == 'size' ) {
+					if ( $value == $pet_photo_size ) {
+
+						// If limit set on number of photos, get the first photo
+						if ( $limit == true ) {
+							$pet_photos = '<p><img alt="Photo of ' . $pet_name . '" src="' . $photo . '"></p>';
+							break 2;
+						}
+
+						// Otherwise, get all of them
+						else {
+							$pet_photos .= '<p><img alt="Photo of ' . $pet_name . '" src="' . $photo . '"></p>';
+						}
+
+					}
+				}
+			}
+		}
+	}
+
+	// If no photos have been uploaded for the pet
+	else {
+		$pet_photos = '<p>No Photo Available</p>'; // Add a fallback/placeholder photo
+	}
+
+	return $pet_photos;
 
 }
 
@@ -504,11 +507,11 @@ function get_options_list($pets) {
 		$option_condensed = pet_value_condensed($option);
 
 		// Create a list
-		$option_list .= $option . ' / ' . $option_condensed . '<br>';
+		$options_list .= $option . ' / ' . $option_condensed . '<br>';
 	}
 
 	// Return the list
-	return '<h2>Pet Options</h2>' . $option_list;
+	return '<h2>Pet Options</h2>' . $options_list;
 
 }
 
