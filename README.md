@@ -24,8 +24,9 @@ Petfinder for WordPress is a set of functions that makes it easy to import and w
 8. [Individual Pets](#individual-pets)
 9. [Shortcode](#shortcode)
 10. [Performance Considerations](#performance-considerations)
-11. [License](#license)
-12. [Changelog](#changelog)
+11. [How to Contribute](#how-to-contribute)
+12. [License](#license)
+13. [Changelog](#changelog)
 
 
 
@@ -296,6 +297,12 @@ If you're pulling information on a large number of animals, your server may time
 If you're seeing the "Petfinder is down for the moment" message, try typing your API URL (the `http://api.petfinder.com/shelter...` part with all of your information added in) directly into a browser tab. If the data loads, then your server may be timing out before the request can be completed.
 
 To fix this, increase the `max_execution_time` for your server. The process for doing this varies by hosting provider. You can find general information in the PHP manual.
+
+
+
+## How to Contribute
+
+In lieu of a formal style guide, take care to maintain the existing coding style. Don't forget to update the version number, the changelog (in the `readme.md` file), and when applicable, the documentation.
 
 
 
