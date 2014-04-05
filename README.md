@@ -11,6 +11,8 @@ Petfinder for WordPress is a set of functions that makes it easy to import and w
 
 **Note:** Petfinder for WordPress is a plugin boilerplate and is designed to be a starting point that you can customize. A working knowledge of PHP and WordPress functions is required. If you're looking for a plug-and-play solution, check out the [Petfinder Listings plugin](http://wordpress.org/extend/plugins/petfinder-listings/).
 
+[Download Petfinder API for WordPress 4](https://github.com/cferdinandi/petfinder-api-for-wordpress/archive/master.zip)
+
 
 **In This Documentation**
 
