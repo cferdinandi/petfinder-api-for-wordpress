@@ -1,6 +1,6 @@
 # Petfinder API for WordPress
 
-***Note:*** *This plugin is no longer actively maintained. [A JavaScript equivalent](https://github.com/cferdinandi/petfinderAPI4everybody) is in the works, and will be replacing it.*
+***Note:*** *This plugin is no longer actively maintained. It has been replaced by [petfinderAPI4everybody.js](https://github.com/cferdinandi/petfinderAPI4everybody), a JavaScript plugin that makes the Petfinder API more flexible and accessible.*
 
 Petfinder for WordPress is a set of functions that makes it easy to import and work with data from Petfinder:
 
